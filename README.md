@@ -18,4 +18,3 @@
 
 [Repository](https://github.com/ntraugh/Social-Media-API)
 
-[Live Site](https://ntraugh.github.io/Social-Media-API/)
