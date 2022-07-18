@@ -13,7 +13,7 @@ const {
 // get & post routes
 router.route("/").get(getAllUsers).post(createUser)
 
-router.route("/:id").get(getUserId).put(updateUser).delete(deleteUser)
-router.route("/:id/friends/:friends").post(addFriend).delete(removeFriend)
+router.route("/:userId").get(getUserId).put(updateUser).delete(deleteUser)
+router.route("/:userId/friends/:friendId").post(addFriend).delete(removeFriend)
 
 module.exports = router

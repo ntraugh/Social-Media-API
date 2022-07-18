@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const app = express()
 const PORT = process.env.PORT || 3001;
 const routes = require("./routes")
+const db = require("./config/connection")
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

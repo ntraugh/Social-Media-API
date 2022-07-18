@@ -4,7 +4,7 @@ const thoughtController = {
     getAllThoughts(req, res) {
         Thought.find({})
         .populate({ path: "reactions", select: "-__v"})
-        .populate({ path: "thought", select: "-__v"})
+        .populate({ path: "thoughts", select: "-__v"})
         .select("-__v")
         .then((dbThoughtData) => res.json(dbThoughtData))
         .catch(err => {
@@ -14,6 +14,13 @@ const thoughtController = {
     },
     createThought({ params, body }, res) {
         Thought.create(body)
+        .then((thoughtData) => {
+            return User.findOneAndUpdate(
+                {_id: body.userId},
+                { $push: { thoughts: thoughtData._id}},
+                { new: true}
+            )
+        })
         .then(({dbThoughtData}) => {
             if(!dbThoughtData) {
                 res.status(404).json({ message: "No thought with given ID"})

@@ -9,7 +9,7 @@ const userController = {
     getAllUsers(req, res) {
         User.find({})
         .populate({ path: "thought", select: "-__v"})
-        .populate({ paths: "friend", select: "-__v"})
+        .populate({ path: "friend", select: "-__v"})
         .select("-__v")
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
@@ -19,7 +19,7 @@ const userController = {
     },
     getUserId({params}, res){
         User.findOne({_id: params.id})
-        .populate({ paths: "thought", select: "-__v"})
+        .populate({ path: "thought", select: "-__v"})
         .populate({ path: "friend", select: "-__v"})
         .select("-__v")
         .then(dbUserData => {
