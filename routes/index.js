@@ -5,3 +5,5 @@ router.use("/api", apiRoutes)
 router.use((req, res) => {
     res.status(404).json({error: "404 Error"})
 })
+
+module.exports = router; 
