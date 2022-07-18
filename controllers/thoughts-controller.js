@@ -14,7 +14,7 @@ const thoughtController = {
     },
     createThought({ params, body }, res) {
         Thought.create(body)
-        .then(({_id}) => {
+        .then(({dbThoughtData}) => {
             if(!dbThoughtData) {
                 res.status(404).json({ message: "No thought with given ID"})
                 return
@@ -27,12 +27,12 @@ const thoughtController = {
         Thought.findOne({ _id: params.id })
         .populate({ path: "reaction", select: "-__v"})
         .select("-__v")
-        .then(dbThoughtsData => {
-            if(!dbThoughtsData) {
+        .then(dbThoughtData => {
+            if(!dbThoughtData) {
             res.status(404).json({message: "No thought with given ID"})
             return
         }
-        res.json(dbThoughtsData)
+        res.json(dbThoughtData)
         })
         .catch(err => {
             console.log(err)
@@ -44,7 +44,7 @@ const thoughtController = {
         .populate({ path: "reaction", select: "-__v"})
         .select("-__v")
         .then(dbThoughtData => {
-            if(!dbThoughtsData) {
+            if(!dbThoughtData) {
                 res.status(404).json({message: "No thought with given ID"})
                 return
             }
@@ -55,7 +55,7 @@ const thoughtController = {
     deleteThought({params}, res){
         Thought.findOneAndDelete({_id: params.id})
         .then(dbThoughtData => {
-            if(!dbThoughtsData) {
+            if(!dbThoughtData) {
                 res.status(404).json({message: "No thought with given ID"})
                 return
             }
@@ -68,7 +68,7 @@ const thoughtController = {
         .populate({ path: "reaction", select: "-__v"})
         .select("-__v")
         .then(dbThoughtData => {
-            if(!dbThoughtsData) {
+            if(!dbThoughtData) {
                 res.status(404).json({message: "No thought with given ID"})
                 return
             }
