@@ -6,7 +6,7 @@ const userController = {
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.status(400).json(err))
     },
-    getallUsers(req, res) {
+    getAllUsers(req, res) {
         User.find({})
         .populate({ path: "thought", select: "-__v"})
         .populate({ paths: "friend", select: "-__v"})

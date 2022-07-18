@@ -7,7 +7,7 @@ const {
     updateUser,
     deleteUser,
     addFriend,
-    removeFriend
+    removeFriend,
 } = require("../../controllers/users-controller");
 
 // get & post routes

@@ -3,7 +3,7 @@ const { Thought, User } = require("../models")
 const thoughtController = {
     getAllThoughts(req, res) {
         Thought.find({})
-        .populate({ path: "reaction", select: "-__v"})
+        .populate({ path: "reactions", select: "-__v"})
         .populate({ path: "thought", select: "-__v"})
         .select("-__v")
         .then((dbThoughtData) => res.json(dbThoughtData))
@@ -25,7 +25,7 @@ const thoughtController = {
     },
     getThoughtId({ params }, res) {
         Thought.findOne({ _id: params.id })
-        .populate({ path: "reaction", select: "-__v"})
+        .populate({ path: "reactions", select: "-__v"})
         .select("-__v")
         .then(dbThoughtData => {
             if(!dbThoughtData) {
@@ -41,7 +41,7 @@ const thoughtController = {
     },
     updateThought({params, body}, res) {
         Thought.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
-        .populate({ path: "reaction", select: "-__v"})
+        .populate({ path: "reactions", select: "-__v"})
         .select("-__v")
         .then(dbThoughtData => {
             if(!dbThoughtData) {
@@ -65,7 +65,7 @@ const thoughtController = {
     },
     addReaction({params, body}, res) {
         Thought.findOneAndUpdate({_id: params.thoughtId}, {$push: {reaction: body}}, {new: true, runValidators: true})
-        .populate({ path: "reaction", select: "-__v"})
+        .populate({ path: "reactions", select: "-__v"})
         .select("-__v")
         .then(dbThoughtData => {
             if(!dbThoughtData) {
@@ -75,6 +75,11 @@ const thoughtController = {
             res.json(dbThoughtData)
         })
         .catch(err => res.status(400).json(err))
+    },
+    deleteReaction({ params }, res) {
+        Thought.findOneAndUpdate({_id: params.thoughtId}, {$pull: { reactionId: params.reactionId}}, {new: true})
+        .then((dbThoughtData) => res.json(dbThoughtData))
+        .catch((err) => res.json(err))
     }
 }
 
